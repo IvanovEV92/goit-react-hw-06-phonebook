@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styles from './form.module.css';
-
+import { connect } from 'react-redux';
+import contactAction from '../../redux/contact/contact-action';
 class Form extends Component {
 	state = { name: '', number: '' };
 
@@ -10,8 +11,8 @@ class Form extends Component {
 		this.setState({ [name]: value });
 	};
 
-	handleSubmit = (evt) => {
-		evt.preventDefault();
+	handleSubmit = e => {
+		e.preventDefault();
 
 		this.props.onSubmit(this.state);
 		this.resetForm();
@@ -57,4 +58,7 @@ class Form extends Component {
 	}
 }
 
-export default Form;
+const mapDispatchToProps = dispatch => ({
+	onSubmit: contact => dispatch(contactAction.handleForm(contact)),
+});
+export default connect(null, mapDispatchToProps)(Form);
